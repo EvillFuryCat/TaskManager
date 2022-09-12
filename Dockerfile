@@ -37,7 +37,7 @@ ENV PATH $PATH:/root/.poetry/bin
 
 RUN mkdir -p /app
 WORKDIR /app
-    COPY pyproject.toml poetry.lock ./
+COPY pyproject.toml poetry.lock ./
 RUN poetry install  --no-interaction --no-ansi
 
 ADD . /app
