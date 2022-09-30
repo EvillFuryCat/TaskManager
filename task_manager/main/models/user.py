@@ -9,5 +9,5 @@ class User(AbstractUser):
         ADMIN = "admin"
 
     role = models.CharField(
-        max_length=255, default=Roles.DEVELOPER, choices=Roles.choices
+        max_length=255, default=Roles.DEVELOPER, choices=Roles.choices, verbose_name='Role'
     )

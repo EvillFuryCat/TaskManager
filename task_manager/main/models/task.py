@@ -1,19 +1,21 @@
 from django.db import models
 from .user import User
-from .tags import Tags
+from .tags import Tag
 
 
 class Task(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, verbose_name="task")
     description = models.TextField()
     date_creation = models.DateTimeField(auto_now_add=True)
     date_change = models.DateTimeField(auto_now=True)
-    deadline = models.DateTimeField(blank=True, null=True)
-    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name="author")
+    deadline = models.DateTimeField(blank=True, null=True, verbose_name="deadline")
+    author = models.ForeignKey(
+        User, on_delete=models.PROTECT, related_name="author", verbose_name="author")
     executor = models.ForeignKey(
-        User, on_delete=models.PROTECT, null=True, related_name="task_executor"
+        User, on_delete=models.PROTECT, null=True, related_name="task_executor", verbose_name="executor"
     )
-    tags = models.ManyToManyField(Tags)
+    tags = models.ManyToManyField(Tag, related_name="Tag", verbose_name="Tag")
+
 
     class Priority(models.TextChoices):
 
@@ -48,3 +50,12 @@ class Task(models.Model):
         choices=Status.choices,
         default=Status.NEW_TASK,
     )
+
+    def __str__(self) -> str:
+        return self.title
+    
+    class Meta:
+        verbose_name = 'Task'
+        verbose_name_plural = 'Task'
+        
+    
