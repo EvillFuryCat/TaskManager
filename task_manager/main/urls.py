@@ -3,5 +3,5 @@ from task_manager.main.admin import task_manager_admin_site
 
 
 urlpatterns = [
-        path("admin/", task_manager_admin_site.urls),
+    path("admin/", task_manager_admin_site.urls),
 ]

@@ -17,5 +17,5 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('main/', include('task_manager.main.urls')),
+    path("main/", include("task_manager.main.urls")),
 ]
