@@ -10,11 +10,17 @@ class Task(models.Model):
     date_change = models.DateTimeField(auto_now=True)
     deadline = models.DateTimeField(blank=True, null=True, verbose_name="deadline")
     author = models.ForeignKey(
-        User, on_delete=models.PROTECT, related_name="author", verbose_name="author"
+        User,
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        related_name="author",
+        verbose_name="author",
     )
     executor = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
+        blank=True,
         null=True,
         related_name="task_executor",
         verbose_name="executor",
