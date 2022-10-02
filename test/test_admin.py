@@ -7,17 +7,20 @@ from rest_framework.test import APIClient, APITestCase
 
 from task_manager.main.models import Tag, Task, User
 
+
 class TestAdmin(APITestCase):
     client: APIClient
     admin: User
-    
+
     @classmethod
     def setUpTestData(cls) -> None:
         super().setUpTestData()
-        cls.admin = User.objects.create_superuser("test@test.ru", email=None, password=None)
+        cls.admin = User.objects.create_superuser(
+            "test@test.ru", email=None, password=None
+        )
         cls.client = APIClient()
         cls.client.force_login(cls.admin)
-        
+
     @classmethod
     def assert_forms(
         cls, model: Type[models.Model], key: int, check_actions: Container = ()
@@ -33,16 +36,23 @@ class TestAdmin(APITestCase):
             url = reverse(f"admin:{app_label}_{model_name}_{action}", args=args)
             response = cls.client.get(url)
             assert response.status_code == HTTPStatus.OK, response.content
-        
-        
+
     def test_user(self) -> None:
         self.assert_forms(User, self.admin.id)
-        
+
+        response = self.client.get(reverse("admin:main_user_changelist"))
+        assert response.status_code == HTTPStatus.FOUND, response.content
+        response = self.client.get(reverse("admin:main_user_add"))
+        assert response.status_code == HTTPStatus.FOUND, response.content
+        response = self.client.get(
+            reverse("admin:main_user_change", args=[self.admin.id])
+        )
+        assert response.status_code == HTTPStatus.FOUND, response.content
+
     def test_tag(self) -> None:
         tag = Tag.objects.create()
         self.assert_forms(Tag, tag.id)
-        
+
     def test_task(self) -> None:
         task = Task.objects.create()
         self.assert_forms(Task, task.id)
-        
