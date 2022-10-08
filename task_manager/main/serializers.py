@@ -17,16 +17,12 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class TagSerializer(serializers.ModelSerializer):
-    tag = serializers.CharField(sourse="get_race_display", read_only=True)
-
     class Meta:
         model = tags.Tag
-        fields = "title"
+        fields = ("title",)
 
 
 class StatusSerializer(serializers.ModelSerializer):
-    status = serializers.CharField(sourse="get_race_display", read_only=True)
-
     class Meta:
         model = task.Task.Status
         fields = (
@@ -41,13 +37,12 @@ class StatusSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    tags = TagSerializer(many=True)
-    statuses = StatusSerializer()
+    tags = TagSerializer(many=True, required=False)
+    status = StatusSerializer()
 
     class Meta:
         model = task.Task
         fields = (
-            "id",
             "title",
             "description",
             "date_creation",

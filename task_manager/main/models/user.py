@@ -3,6 +3,9 @@ from django.db import models
 
 
 class User(AbstractUser):
+    date_of_birth = models.DateField(null=True, blank=True)
+    phone = models.CharField(max_length=20, null=True, blank=True)
+    
     class Roles(models.TextChoices):
         DEVELOPER = "developer"
         MANAGER = "manager"
