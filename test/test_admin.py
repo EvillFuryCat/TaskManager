@@ -39,15 +39,16 @@ class TestAdmin(APITestCase):
 
     def test_user(self) -> None:
         self.assert_forms(User, self.admin.id)
+        self.client.force_login(self.admin)
 
         response = self.client.get(reverse("admin:main_user_changelist"))
-        assert response.status_code == HTTPStatus.FOUND, response.content
+        assert response.status_code == HTTPStatus.OK, response.content
         response = self.client.get(reverse("admin:main_user_add"))
-        assert response.status_code == HTTPStatus.FOUND, response.content
+        assert response.status_code == HTTPStatus.OK, response.content
         response = self.client.get(
             reverse("admin:main_user_change", args=[self.admin.id])
         )
-        assert response.status_code == HTTPStatus.FOUND, response.content
+        assert response.status_code == HTTPStatus.OK, response.content
 
     def test_tag(self) -> None:
         tag = Tag.objects.create()

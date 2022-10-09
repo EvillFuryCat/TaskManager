@@ -22,23 +22,9 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ("title",)
 
 
-class StatusSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = task.Task.Status
-        fields = (
-            "NEW_TASK",
-            "IN_DEVELOPMENT",
-            "IN_QA",
-            "IN_CODE_REVIEW",
-            "READY_FOR_RELEASE",
-            "RELEASED",
-            "ARCHIVED",
-        )
-
-
 class TaskSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True, required=False)
-    status = StatusSerializer()
+    status = serializers.CharField(sourse = "get_status_display")
 
     class Meta:
         model = task.Task
