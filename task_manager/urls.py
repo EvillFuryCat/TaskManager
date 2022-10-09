@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from task_manager.main.views import TaskAPIView
+
 urlpatterns = [
     path("main/", include("task_manager.main.urls")),
+    path("api/v1/tasklist", TaskAPIView.as_view())
 ]

@@ -24,7 +24,7 @@ class TagSerializer(serializers.ModelSerializer):
 
 class TaskSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True, required=False)
-    status = serializers.CharField(sourse = "get_status_display")
+    status = serializers.CharField()
 
     class Meta:
         model = task.Task

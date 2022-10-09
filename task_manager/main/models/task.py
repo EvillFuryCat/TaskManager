@@ -4,7 +4,7 @@ from .tags import Tag
 
 
 class Task(models.Model):
-    title = models.CharField(max_length=255, verbose_name="task")
+    title = models.CharField(max_length=255, verbose_name="Task")
     description = models.TextField()
     date_creation = models.DateTimeField(auto_now_add=True)
     date_change = models.DateTimeField(auto_now=True)
@@ -22,7 +22,7 @@ class Task(models.Model):
         on_delete=models.PROTECT,
         blank=True,
         null=True,
-        related_name="task_executor",
+        related_name="executor",
         verbose_name="executor",
     )
     tags = models.ManyToManyField(Tag, related_name="Tag", verbose_name="Tag")
