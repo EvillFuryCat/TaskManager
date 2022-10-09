@@ -20,5 +20,5 @@ from task_manager.main.views import TaskAPIView
 
 urlpatterns = [
     path("main/", include("task_manager.main.urls")),
-    path("api/v1/tasklist", TaskAPIView.as_view())
+    path("api/v1/tasklist", TaskAPIView.as_view()),
 ]

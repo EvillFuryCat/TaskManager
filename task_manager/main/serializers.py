@@ -3,6 +3,10 @@ from .models import tags, user, task
 
 
 class UserSerializer(serializers.ModelSerializer):
+    def to_representation(self, value):
+        nickname = value.username
+        return nickname
+
     class Meta:
         model = user.User
         fields = (
@@ -17,14 +21,21 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class TagSerializer(serializers.ModelSerializer):
+    def to_representation(self, value):
+        tag_name = value.title
+        return tag_name
+
     class Meta:
         model = tags.Tag
         fields = ("title",)
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    tags = TagSerializer(many=True, required=False)
-    status = serializers.CharField()
+    tags = TagSerializer(many=True)
+    status = serializers.CharField(source="get_status_display")
+    priority = serializers.CharField(source="get_priority_display")
+    author = UserSerializer()
+    executor = UserSerializer()
 
     class Meta:
         model = task.Task
