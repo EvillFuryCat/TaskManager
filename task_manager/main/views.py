@@ -13,7 +13,7 @@ class TaskAPIView(generics.ListAPIView):
 
 
 class UserFilter(django_filters.FilterSet):
-    name = django_filters.CharFilter(lookup_expr="icontains")
+    username = django_filters.CharFilter(lookup_expr="icontains")
 
     class Meta:
         model = User
