@@ -17,7 +17,7 @@ class UserFilter(django_filters.FilterSet):
 
     class Meta:
         model = User
-        fields = ("name",)
+        fields = ("username",)
 
 
 class UserViewSet(viewsets.ModelViewSet):
