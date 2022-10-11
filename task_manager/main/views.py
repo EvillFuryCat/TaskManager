@@ -6,7 +6,6 @@ import django_filters
 from .serializers import TaskSerializer, UserSerializer, TagSerializer
 from .models import Task, User, Tag
 
-#
 
 class TaskAPIView(generics.ListAPIView):
     queryset = Task.objects.all()
@@ -33,7 +32,9 @@ class TagViewSet(viewsets.ModelViewSet):
 
 
 class TaskFilter(django_filters.FilterSet):
-    tags = django_filters.ModelMultipleChoiceFilter(field_name="tags__title", queryset=Tag.objects.all())
+    tags = django_filters.ModelMultipleChoiceFilter(
+        field_name="tags__title", queryset=Tag.objects.all()
+    )
     author = django_filters.CharFilter(lookup_expr="icontains")
     executor = django_filters.CharFilter(lookup_expr="icontains")
 
