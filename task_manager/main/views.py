@@ -32,10 +32,11 @@ class TaskFilter(django_filters.FilterSet):
     )
     author = django_filters.ModelChoiceFilter(queryset=User.objects.all())
     executor = django_filters.ModelChoiceFilter(queryset=User.objects.all())
+    status = django_filters.ChoiceFilter(choices=Task.Status.choices)
 
     class Meta:
         model = Task
-        fields = ["tags", "author", "executor"]
+        fields = ["tags", "status", "author", "executor"]
 
 
 class TaskViewSet(viewsets.ModelViewSet):
