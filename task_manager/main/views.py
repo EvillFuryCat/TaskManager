@@ -7,11 +7,6 @@ from .serializers import TaskSerializer, UserSerializer, TagSerializer
 from .models import Task, User, Tag
 
 
-class TaskAPIView(generics.ListAPIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
-
-
 class UserFilter(django_filters.FilterSet):
     username = django_filters.CharFilter(lookup_expr="icontains")
 
