@@ -35,8 +35,8 @@ class TaskFilter(django_filters.FilterSet):
     tags = django_filters.ModelMultipleChoiceFilter(
         field_name="tags__title", queryset=Tag.objects.all()
     )
-    author = django_filters.CharFilter(lookup_expr="icontains")
-    executor = django_filters.CharFilter(lookup_expr="icontains")
+    author = django_filters.ModelChoiceFilter(queryset=User.objects.all())
+    executor = django_filters.ModelChoiceFilter(queryset=User.objects.all())
 
     class Meta:
         model = Task
