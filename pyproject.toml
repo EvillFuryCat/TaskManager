@@ -9,8 +9,11 @@ python = "^3.9"
 Django = "^4.1.1"
 psycopg2-binary = "^2.9.3"
 djangorestframework = "^3.14.0"
+Markdown = "^3.4.1"
+django-filter = "^22.1"
 
 [tool.poetry.dev-dependencies]
+drf-yasg = "^1.21.4"
 pytest-django = "^4.5.2"
 flake8 = "^5.0.4"
 black = "^22.8.0"
