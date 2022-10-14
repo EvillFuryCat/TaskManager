@@ -3,9 +3,6 @@ from .models import tags, user, task
 
 
 class UserSerializer(serializers.ModelSerializer):
-    def to_representation(self, value):
-        nickname = value.username
-        return nickname
 
     class Meta:
         model = user.User
@@ -31,11 +28,7 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    tags = TagSerializer(many=True)
-    status = serializers.CharField(source="get_status_display")
-    priority = serializers.CharField(source="get_priority_display")
-    author = UserSerializer()
-    executor = UserSerializer()
+    tags = TagSerializer(many=True, read_only=True)
 
     class Meta:
         model = task.Task
