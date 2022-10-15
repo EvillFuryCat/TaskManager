@@ -1,3 +1,4 @@
+from urllib import response
 from rest_framework.test import APIClient, APITestCase
 from http import HTTPStatus
 from django.urls import reverse
@@ -11,6 +12,7 @@ from factories import UserFactory
 
 class TestViewSetBase(APITestCase):
     user: User = None
+    task:  Task = None
     client: APIClient = None
     basename: str
 
@@ -39,15 +41,20 @@ class TestViewSetBase(APITestCase):
         assert response.status_code == HTTPStatus.CREATED, response.content
         return response.data
 
-    def retrieve(self, data: dict) -> tuple:
-        data = self.user.id
-        response = self.client.get(self.detail_url(data))
+    def retrieve(self, data):
+        self.client.force_login(self.user)
+        response = self.client.get(self.detail_url(data["id"]))
         return response
 
     def update(self, data):
         self.client.force_login(self.user)
-        user_data = self.user
-        user_data.username = data
-        response = self.client.put(self.detail_url(self.user.id), data)
+        response = self.client.put(self.detail_url(self.user.id), data=data)
+        self.user.refresh_from_db()
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data
+
+    def delete(self, data):
+        self.client.force_login(self.user)
+        response = self.client.delete(self.detail_url(data["id"]))
+        self.user.refresh_from_db()
+        return response

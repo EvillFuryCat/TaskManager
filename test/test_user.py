@@ -20,13 +20,16 @@ class TestUserViewSet(TestViewSetBase):
         assert user == expected_response
 
     def test_retrieve(self):
-        response = self.retrieve(self.user)
+        user = self.create(self.user_attributes)
+        response = self.retrieve(user)
         assert response.status_code == HTTPStatus.OK, response.content
 
     def test_update(self):
         new_username = {"username": "ScaryCat"}
         self.update(new_username)
-        assert self.user.username == new_username
+        assert self.user.username == new_username["username"]
 
-    def test_delete():
-        pass
+    def test_delete(self):
+        new_user = self.create(self.user_attributes)
+        response = self.delete(new_user)
+        assert response.status_code == HTTPStatus.NO_CONTENT, response.conten
