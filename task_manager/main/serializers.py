@@ -3,7 +3,6 @@ from .models import tags, user, task
 
 
 class UserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = user.User
         fields = (

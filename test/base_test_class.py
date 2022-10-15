@@ -5,7 +5,7 @@ from typing import Union, List
 import factory
 
 
-from task_manager.main.models import User
+from task_manager.main.models import User, Task, Tag
 from factories import UserFactory
 
 
@@ -33,8 +33,21 @@ class TestViewSetBase(APITestCase):
     def list_url(cls, args: List[Union[str, int]] = None) -> str:
         return reverse(f"{cls.basename}-list", args=args)
 
-    def create(self, data, args: List[Union[str, int]] = None) -> dict:
+    def create(self, data: dict, args: List[Union[str, int]] = None) -> dict:
         self.client.force_login(self.user)
         response = self.client.post(self.list_url(args), data=data)
         assert response.status_code == HTTPStatus.CREATED, response.content
+        return response.data
+
+    def retrieve(self, data: dict) -> tuple:
+        data = self.user.id
+        response = self.client.get(self.detail_url(data))
+        return response
+
+    def update(self, data):
+        self.client.force_login(self.user)
+        user_data = self.user
+        user_data.username = data
+        response = self.client.put(self.detail_url(self.user.id), data)
+        assert response.status_code == HTTPStatus.OK, response.content
         return response.data
