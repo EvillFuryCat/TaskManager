@@ -17,13 +17,13 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class TagSerializer(serializers.ModelSerializer):
-    def to_representation(self, value):
-        tag_name = value.title
-        return tag_name
 
     class Meta:
         model = tags.Tag
-        fields = ("title",)
+        fields = (
+            "id",
+            "title",
+        )
 
 
 class TaskSerializer(serializers.ModelSerializer):
@@ -32,6 +32,7 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = task.Task
         fields = (
+            "id"
             "title",
             "description",
             "date_creation",

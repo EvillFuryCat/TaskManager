@@ -1,7 +1,7 @@
 import factory
 
 
-from task_manager.main.models.user import User
+from task_manager.main.models import User, Tag, Task
 from Faker import faker
 
 
@@ -15,3 +15,10 @@ class UserFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = User
+
+
+class TagFactory(factory.django.DjangoModelFactory):
+    title = factory.LazyAttribute(lambda _: faker.unique.word())
+
+    class Meta:
+        model = Tag

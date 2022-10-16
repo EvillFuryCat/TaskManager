@@ -1,18 +1,18 @@
-from urllib import response
-from rest_framework.test import APIClient, APITestCase
-from http import HTTPStatus
-from django.urls import reverse
-from typing import Union, List
 import factory
 
+from http import HTTPStatus
+from typing import List, Union
+from django.contrib import auth
 
-from task_manager.main.models import User, Task, Tag
+from django.urls import reverse
+from rest_framework.test import APIClient, APITestCase
+
+from task_manager.main.models import User
 from factories import UserFactory
 
 
 class TestViewSetBase(APITestCase):
     user: User = None
-    task:  Task = None
     client: APIClient = None
     basename: str
 
@@ -37,24 +37,21 @@ class TestViewSetBase(APITestCase):
 
     def create(self, data: dict, args: List[Union[str, int]] = None) -> dict:
         self.client.force_login(self.user)
-        response = self.client.post(self.list_url(args), data=data)
+        response = self.client.post(self.list_url(args), data)
         assert response.status_code == HTTPStatus.CREATED, response.content
         return response.data
 
-    def retrieve(self, data):
-        self.client.force_login(self.user)
-        response = self.client.get(self.detail_url(data["id"]))
-        return response
-
-    def update(self, data):
-        self.client.force_login(self.user)
-        response = self.client.put(self.detail_url(self.user.id), data=data)
-        self.user.refresh_from_db()
+    def retrieve(self, args: int = None) -> dict:
+        response = self.client.get(self.detail_url(args))
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data
-
-    def delete(self, data):
-        self.client.force_login(self.user)
-        response = self.client.delete(self.detail_url(data["id"]))
-        self.user.refresh_from_db()
+    
+    def update(self, data: dict, args: int = None) -> dict:
+        response = self.client.put(self.detail_url(args), data)
+        assert response.status_code == HTTPStatus.OK, response.content
+        return response.data
+    
+    def delete(self, args: int = None) -> dict:
+        response = self.client.delete(self.detail_url(args))
         return response
+
