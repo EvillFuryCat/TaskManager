@@ -1,11 +1,9 @@
 import factory
-
 from http import HTTPStatus
 from typing import List, Union
-from django.contrib import auth
-
 from django.urls import reverse
 from rest_framework.test import APIClient, APITestCase
+
 
 from task_manager.main.models import User
 from factories import UserFactory
@@ -41,17 +39,27 @@ class TestViewSetBase(APITestCase):
         assert response.status_code == HTTPStatus.CREATED, response.content
         return response.data
 
+    def retrieve_list(self) -> dict:
+        self.client.force_login(self.user)
+        response = self.client.get(self.list_url())
+        assert response.status_code == HTTPStatus.OK, response.content
+        return response
+
     def retrieve(self, args: int = None) -> dict:
         response = self.client.get(self.detail_url(args))
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data
-    
+
+    def unauthorized_retrieve(self, args: int = None) -> dict:
+        self.client.logout()
+        response = self.client.get(self.detail_url(args))
+        return response
+
     def update(self, data: dict, args: int = None) -> dict:
-        response = self.client.put(self.detail_url(args), data)
+        response = self.client.patch(self.detail_url(args), data)
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data
-    
+
     def delete(self, args: int = None) -> dict:
         response = self.client.delete(self.detail_url(args))
         return response
-

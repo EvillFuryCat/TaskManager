@@ -17,7 +17,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class TagSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = tags.Tag
         fields = (
@@ -32,7 +31,7 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = task.Task
         fields = (
-            "id"
+            "id",
             "title",
             "description",
             "date_creation",

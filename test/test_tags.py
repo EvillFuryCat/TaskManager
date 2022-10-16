@@ -18,10 +18,19 @@ class TestTagViewSet(TestViewSetBase):
         expected_response = self.expected_details(tag, self.tag_attributes)
         assert tag == expected_response
 
+    def test_retrieve_list(self):
+        response = self.retrieve_list()
+        assert response.status_code == HTTPStatus.OK, response.content
+
     def test_retrieve(self):
         tag = self.create(self.tag_attributes)
         expected_response = self.retrieve(tag["id"])
         assert tag == expected_response
+
+    def test_unauthorized_retrieve(self):
+        tag = self.create(self.tag_attributes)
+        response = self.unauthorized_retrieve(tag["id"])
+        assert response.status_code == HTTPStatus.FORBIDDEN, response.content
 
     def test_update(self):
         tag = self.create(self.tag_attributes)
