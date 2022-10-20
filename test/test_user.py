@@ -8,6 +8,8 @@ from factories import UserFactory
 class TestUserViewSet(TestViewSetBase):
     basename = "users"
     user_attributes = factory.build(dict, FACTORY_CLASS=UserFactory)
+    
+    users_attributes = factory.build_batch(dict, FACTORY_CLASS=UserFactory, size=5)
 
     @staticmethod
     def expected_details(entity: dict, attributes: dict):
@@ -17,20 +19,23 @@ class TestUserViewSet(TestViewSetBase):
         user = self.create(self.user_attributes)
         expected_response = self.expected_details(user, self.user_attributes)
         assert user == expected_response
-
+    
     def test_retrieve_list(self):
+        users = self.create_list(self.users_attributes)
         response = self.retrieve_list()
-        assert response.status_code == HTTPStatus.OK, response.content
+        assert response == users
 
     def test_retrieve(self):
         user = self.create(self.user_attributes)
-        expected_response = self.retrieve(user["id"])
-        assert user == expected_response
+        expected_response = self.expected_details(user, self.user_attributes)
+        response = self.retrieve(user["id"])
+        assert response == expected_response
 
     def test_unauthorized_retrieve(self):
         user = self.create(self.user_attributes)
         response = self.unauthorized_retrieve(user["id"])
-        assert response.status_code == HTTPStatus.FORBIDDEN, response.content
+        expected_error = 'Учетные данные не были предоставлены.'
+        assert response['detail'] == expected_error
 
     def test_update(self):
         user = self.create(self.user_attributes)

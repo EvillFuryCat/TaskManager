@@ -8,6 +8,8 @@ from factories import TaskFactory
 class TestTaskViewSet(TestViewSetBase):
     basename = "task"
     task_attributes = factory.build(dict, FACTORY_CLASS=TaskFactory)
+    
+    tasks_attributes = factory.build_batch(dict, FACTORY_CLASS=TaskFactory, size=5)
 
     @staticmethod
     def expected_details(entity: dict, attributes: dict):
@@ -19,22 +21,25 @@ class TestTaskViewSet(TestViewSetBase):
         assert task["description"] == expected_response["description"]
 
     def test_retrieve_list(self):
+        tasks = self.create_list(self.tasks_attributes)
         response = self.retrieve_list()
-        assert response.status_code == HTTPStatus.OK, response.content
+        assert response == tasks
 
     def test_retrieve(self):
         task = self.create(self.task_attributes)
-        expected_response = self.retrieve(task["id"])
-        assert task == expected_response
+        response = self.retrieve(task["id"])
+        expected_response = self.expected_details(task, self.task_attributes)
+        assert response["id"] == expected_response["id"]
 
     def test_unauthorized_retrieve(self):
         task = self.create(self.task_attributes)
         response = self.unauthorized_retrieve(task["id"])
-        assert response.status_code == HTTPStatus.FORBIDDEN, response.content
+        expected_error = 'Учетные данные не были предоставлены.'
+        assert response['detail'] == expected_error
 
     def test_update(self):
         task = self.create(self.task_attributes)
-        new_data = {"deadline": "2022-12-31T09:18:55Z"}
+        new_data = {"deadline": "2022-12-31T09:18:55Z", "title": "I want to go on vacation"}
         expected_response = self.update(new_data, task["id"])
         updated_task = self.retrieve(task["id"])
         assert updated_task == expected_response

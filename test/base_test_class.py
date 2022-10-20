@@ -1,6 +1,8 @@
 import factory
+
 from http import HTTPStatus
 from typing import List, Union
+
 from django.urls import reverse
 from rest_framework.test import APIClient, APITestCase
 
@@ -38,22 +40,26 @@ class TestViewSetBase(APITestCase):
         response = self.client.post(self.list_url(args), data)
         assert response.status_code == HTTPStatus.CREATED, response.content
         return response.data
-
-    def retrieve_list(self) -> dict:
-        self.client.force_login(self.user)
-        response = self.client.get(self.list_url())
-        assert response.status_code == HTTPStatus.OK, response.content
-        return response
+    
+    def create_list(self, data: list[dict]) -> list[dict]:
+        return list(map(self.create, data))
 
     def retrieve(self, args: int = None) -> dict:
         response = self.client.get(self.detail_url(args))
+        assert response.status_code == HTTPStatus.OK, response.content
+        return response.data
+    
+    def retrieve_list(self) -> dict:
+        self.client.force_login(self.user)
+        response = self.client.get(self.list_url())
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data
 
     def unauthorized_retrieve(self, args: int = None) -> dict:
         self.client.logout()
         response = self.client.get(self.detail_url(args))
-        return response
+        assert response.status_code == HTTPStatus.FORBIDDEN
+        return response.data
 
     def update(self, data: dict, args: int = None) -> dict:
         response = self.client.patch(self.detail_url(args), data)
