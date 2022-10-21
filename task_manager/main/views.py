@@ -21,7 +21,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class TagViewSet(viewsets.ModelViewSet):
-    queryset = Tag.objects.order_by("title")
+    queryset = Tag.objects.all()
     serializer_class = TagSerializer
 
 

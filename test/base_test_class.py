@@ -40,17 +40,18 @@ class TestViewSetBase(APITestCase):
         response = self.client.post(self.list_url(args), data)
         assert response.status_code == HTTPStatus.CREATED, response.content
         return response.data
-    
+
     def create_list(self, data: list[dict]) -> list[dict]:
         return list(map(self.create, data))
 
     def retrieve(self, args: int = None) -> dict:
+        self.client.force_login(self.user)
         response = self.client.get(self.detail_url(args))
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data
-    
+
     def retrieve_list(self) -> dict:
-        self.client.force_login(self.user)
+        # self.client.force_login(self.user)
         response = self.client.get(self.list_url())
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data

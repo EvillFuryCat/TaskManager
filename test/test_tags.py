@@ -8,7 +8,7 @@ from factories import TagFactory
 class TestTagViewSet(TestViewSetBase):
     basename = "tags"
     tag_attributes = factory.build(dict, FACTORY_CLASS=TagFactory)
-    
+
     tags_attributes = factory.build_batch(dict, FACTORY_CLASS=TagFactory, size=5)
 
     @staticmethod
@@ -25,19 +25,17 @@ class TestTagViewSet(TestViewSetBase):
         expected_response = self.expected_details(tag, self.tag_attributes)
         response = self.retrieve(tag["id"])
         assert response == expected_response
-        
+
     def test_retrieve_list(self):
         tags = self.create_list(self.tags_attributes)
         response = self.retrieve_list()
-        print("TAGS", tags)
-        print("responseTAG", response)
         assert response == tags
 
     def test_unauthorized_retrieve(self):
         tag = self.create(self.tag_attributes)
         response = self.unauthorized_retrieve(tag["id"])
-        expected_error = 'Учетные данные не были предоставлены.'
-        assert response['detail'] == expected_error
+        expected_error = "Учетные данные не были предоставлены."
+        assert response["detail"] == expected_error
 
     def test_update(self):
         tag = self.create(self.tag_attributes)

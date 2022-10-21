@@ -29,8 +29,8 @@ class TagFactory(factory.django.DjangoModelFactory):
 class TaskFactory(factory.django.DjangoModelFactory):
     title = factory.LazyAttribute(lambda _: faker.unique.word())
     description = factory.LazyAttribute(lambda _: faker.text())
-    date_creation = datetime.now().isoformat() 
-    date_change = datetime.now().isoformat() 
+    date_creation = datetime.now().isoformat()
+    date_change = datetime.now().isoformat()
     deadline = datetime.now().isoformat()
     tags = factory.LazyAttribute(lambda _: faker.unique.word())
 
