@@ -51,7 +51,7 @@ class TestViewSetBase(APITestCase):
         return response.data
 
     def retrieve_list(self) -> dict:
-        # self.client.force_login(self.user)
+        self.client.force_login(self.user)
         response = self.client.get(self.list_url())
         assert response.status_code == HTTPStatus.OK, response.content
         return response.data
@@ -59,7 +59,8 @@ class TestViewSetBase(APITestCase):
     def unauthorized_retrieve(self, args: int = None) -> dict:
         self.client.logout()
         response = self.client.get(self.detail_url(args))
-        assert response.status_code == HTTPStatus.FORBIDDEN
+        print(response.status_code)
+        assert response.status_code == HTTPStatus.UNAUTHORIZED
         return response.data
 
     def update(self, data: dict, args: int = None) -> dict:

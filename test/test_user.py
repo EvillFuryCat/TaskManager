@@ -37,6 +37,7 @@ class TestUserViewSet(TestViewSetBase):
         user = self.create(self.user_attributes)
         response = self.unauthorized_retrieve(user["id"])
         expected_error = "Учетные данные не были предоставлены."
+        print("@@@@@@@@@@@@@@@@@@@@", response)
         assert response["detail"] == expected_error
 
     def test_update(self):
