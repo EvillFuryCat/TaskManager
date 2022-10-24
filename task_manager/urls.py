@@ -39,7 +39,7 @@ schema_view = get_schema_view(
 router = routers.SimpleRouter()
 router.register(r"task", TaskViewSet, basename="task")
 router.register(r"user", UserViewSet, basename="users")
-router.register(r"tag", TagViewSet, basename="tag")
+router.register(r"tag", TagViewSet, basename="tags")
 
 urlpatterns = [
     path("main/", include("task_manager.main.urls")),

@@ -17,6 +17,8 @@ drf-yasg = "^1.21.4"
 pytest-django = "^4.5.2"
 flake8 = "^5.0.4"
 black = "^22.8.0"
+factory-boy = "^3.2.1"
+Faker = "^9.8.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

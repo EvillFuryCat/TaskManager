@@ -1,5 +1,4 @@
-from rest_framework import generics, viewsets
-from django.shortcuts import render
+from rest_framework import viewsets
 import django_filters
 
 
@@ -22,7 +21,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class TagViewSet(viewsets.ModelViewSet):
-    queryset = Task.objects.prefetch_related("tags")
+    queryset = Tag.objects.all()
     serializer_class = TagSerializer
 
 
