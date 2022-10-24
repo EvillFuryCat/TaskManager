@@ -7,6 +7,7 @@ services:
       &api-volumes
       - ~/.ssh:/root/.ssh
       - ~/.bash_history:/root/.bash_history
+      - .:/app
     ports:
       - 8000:8000
     depends_on:
