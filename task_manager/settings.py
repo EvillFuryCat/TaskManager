@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "markdown",
     "django_filters",
     "drf_yasg",
+    "rest_framework_simplejwt",
 ]
 
 AUTH_USER_MODEL = "main.User"
@@ -52,6 +53,10 @@ REST_FRAMEWORK = {
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.SessionAuthentication"
+        ],
 }
 
 MIDDLEWARE = [
