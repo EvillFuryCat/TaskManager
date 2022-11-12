@@ -12,6 +12,8 @@ djangorestframework = "^3.14.0"
 Markdown = "^3.4.1"
 django-filter = "^22.1"
 djangorestframework-simplejwt = "^5.2.2"
+PyYAML = "^6.0"
+coveralls = "^3.3.1"
 
 [tool.poetry.dev-dependencies]
 drf-yasg = "^1.21.4"

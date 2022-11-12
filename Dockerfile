@@ -37,6 +37,7 @@ ENV PATH $PATH:/root/.poetry/bin
 
 RUN mkdir -p /app
 WORKDIR /app
+
 COPY pyproject.toml poetry.lock ./
 RUN poetry install  --no-interaction --no-ansi
 
@@ -44,7 +45,6 @@ ADD . /app
 ENV DJANGO_SETTINGS_MODULE="task_manager.settings"
 
 EXPOSE 8000
-
 
 ADD entrypoint.sh /entrypoint.sh
 RUN chmod a+x /entrypoint.sh
