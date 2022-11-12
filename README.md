@@ -1,1 +1,1 @@
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fatrox%2Fsync-dotenv%2Fbadge&style=flat)](https://actions-badge.atrox.dev/atrox/sync-dotenv/goto)
+[![Main](https://github.com/EvillFuryCat/TaskManager/actions/workflows/main.yml/badge.svg?branch=develop)](https://github.com/EvillFuryCat/TaskManager/actions/workflows/main.yml)
