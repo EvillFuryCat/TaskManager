@@ -14,7 +14,7 @@ x-db-config: &db-config
 
 services:
   api:
-    image: task_manager_api
+    image: taskmanager_api
     build:
       context: .
       target: base
