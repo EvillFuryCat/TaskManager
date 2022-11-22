@@ -13,6 +13,7 @@ Markdown = "^3.4.1"
 django-filter = "^22.1"
 djangorestframework-simplejwt = "^5.2.2"
 PyYAML = "^6.0"
+coveralls = "^3.3.1"
 
 [tool.poetry.dev-dependencies]
 drf-yasg = "^1.21.4"
@@ -23,7 +24,6 @@ factory-boy = "^3.2.1"
 Faker = "^9.8.2"
 coverage = "^6.5.0"
 freezegun = "^1.2.2"
-coveralls = "^3.3.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
